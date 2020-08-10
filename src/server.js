@@ -16,4 +16,4 @@ server
   .get("/study", pageStudy)
   .get("/give-classes", pageGiveClasses)
 
-  .listen(5500);
+  .listen(5500, () => console.log('running on port 5500'));

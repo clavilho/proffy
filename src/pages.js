@@ -1,7 +1,7 @@
 const Database = require("./database/db");
 
 const {
-  subject,
+  subjects,
   weekdays,
   getSubject,
   convertHoursToMinutes,
@@ -15,7 +15,8 @@ async function pageStudy(req, res) {
   const filters = req.query;
 
   if (!filters.subject || !filters.weekday || !filters.time) {
-    return res.render("study.njk", { filters, subject, weekdays });
+    console.log(subjects)
+    return res.render("study.njk", { filters, subjects, weekdays });
   }
 
   const timeToMinutes = convertHoursToMinutes(filters.time);
@@ -32,9 +33,7 @@ async function pageStudy(req, res) {
         AND class_schedule.time_from <= ${filters.timeToMinutes}
         AND class_schedule.time_to > ${filters.timeToMinutes}
    )
-   AND classes.subject = '${filter.subject}'
-
-    `;
+   AND classes.subject = '${filter.subject}'`;
 
   try {
     const db = await Database;
@@ -54,6 +53,8 @@ function pageGiveClasses(req, res) {
     proffys.push(data);
     return res.redirect("/study");
   }
+
+  
 
   return res.render("give-classes.njk", { subjects, weekdays });
 }
