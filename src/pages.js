@@ -8,14 +8,14 @@ const {
 } = require("./utils/format");
 
 function pageLanding(req, res) {
-  return res.render("index.html");
+  return res.render("index.njk");
 }
 
 async function pageStudy(req, res) {
   const filters = req.query;
 
   if (!filters.subject || !filters.weekday || !filters.time) {
-    return res.render("study.html", { filters, subject, weekdays });
+    return res.render("study.njk", { filters, subject, weekdays });
   }
 
   const timeToMinutes = convertHoursToMinutes(filters.time);
@@ -39,7 +39,7 @@ async function pageStudy(req, res) {
   try {
     const db = await Database;
     const proffys = await db.all(query);
-    return res.render('study.html',(proffys,subjects,filters, weekdays))
+    return res.render('study.njk',(proffys,subjects,filters, weekdays))
   } catch (error) {
     console.log(error);
   }
@@ -55,7 +55,7 @@ function pageGiveClasses(req, res) {
     return res.redirect("/study");
   }
 
-  return res.render("give-classes.html", { subjects, weekdays });
+  return res.render("give-classes.njk", { subjects, weekdays });
 }
 
 module.exports = {

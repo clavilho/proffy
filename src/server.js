@@ -11,6 +11,7 @@ nunjucks.configure("src/views", {
 
 server
   .use(express.static("public"))
+  .set('view engine', '.njk')
   .get("/", pageLanding)
   .get("/study", pageStudy)
   .get("/give-classes", pageGiveClasses)
